@@ -31,9 +31,9 @@ public class Compiler {
                 fil.delete();
             }
         }
-        ProcessBuilder pb = new ProcessBuilder("javac",
-                "-cp", apipath, "-target",
-                "1.1", "-source", "1.3", "-nowarn", "-encoding", "UTF-8", srcpath + "*.java", "-d", outpath);
+        ProcessBuilder pb = new ProcessBuilder("sh", "-c",
+            "find " + srcpath + " -name '*.java' | xargs javac -cp " + apipath +
+            " -target 1.1 -source 1.3 -nowarn -encoding UTF-8 -d " + outpath);
         Process p = pb.start();
 
         time1 = System.currentTimeMillis();
@@ -63,7 +63,7 @@ public class Compiler {
         File folder = new File(outpath);
         listOfFiles = folder.listFiles();
         if (listOfFiles.length == 0) {
-            throw new Exception("Ошибка компиляции");
+            throw new Exception("Compilation error");
         }
 
         File f = new File("prebuild" + File.separator + "temp.jar");
@@ -76,10 +76,10 @@ public class Compiler {
         zip.write(("Manifest-Version: 1.0\n"
                 + "Ant-Version: Apache Ant 1.9.4\n"
                 + "Created-By: 1.8.0_25-b18 (Oracle Corporation)\n"
-                + "MIDlet-1: FW,,FW\n"
-                + "MIDlet-Vendor: Vendor\n"
-                + "MIDlet-Version: 1.0\n"
-                + "MIDlet-Name: MBRun\n"
+                + "MIDlet-1: CreaProPhone, /icon.png, org.CreadoresProgram.CreaProPhone.Main\n"
+                + "MIDlet-Vendor: Creadores Program\n"
+                + "MIDlet-Version: 1.0.0\n"
+                + "MIDlet-Name: CreaProPhone\n"
                 + "MicroEdition-Configuration: CLDC-1.1\n"
                 + "MicroEdition-Profile: MIDP-2.0").getBytes("UTF-8"));
         zip.closeEntry();
@@ -101,7 +101,7 @@ public class Compiler {
             }
         }
         zip.close();
-        previrify("prebuild" + File.separator + "temp.jar", "bombom.jar");
+        previrify("prebuild" + File.separator + "temp.jar", "CreaProPhone.jar");
 
     }
 
@@ -133,8 +133,7 @@ public class Compiler {
 
         final String result = console.toString().trim();
         System.out.println(result);
-        System.out.println("Сборка завершена за " + getTime(differneceDate));
-
+        System.out.println("Assembly completed in " + getTime(differneceDate));
     }
 
     private String getTime(Date date) {
