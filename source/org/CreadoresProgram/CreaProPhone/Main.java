@@ -100,9 +100,9 @@ public class Main extends MIDlet implements CommandListener {
         }else if(c == cmdmainSalir){
             notifyDestroyed();
         }else if(c == cmdconfigActuaKey){
-            TextBox tb = new TextBox("API Key", "Escribe tu API key:", 100, TextField.ANY);
-            Command cmdOk = new Command("Aceptar", Command.OK, 1);
-            Command cmdCancel = new Command("Cancelar", Command.CANCEL, 2);
+            final TextBox tb = new TextBox("API Key", "Escribe tu API key:", 100, TextField.ANY);
+            final Command cmdOk = new Command("Aceptar", Command.OK, 1);
+            final Command cmdCancel = new Command("Cancelar", Command.CANCEL, 2);
             tb.addCommand(cmdOk);
             tb.addCommand(cmdCancel);
             tb.setCommandListener(new CommandListener(){
@@ -129,9 +129,9 @@ public class Main extends MIDlet implements CommandListener {
             });
             Display.getDisplay(this).setCurrent(tb);
         }else if(c == cmdconfigActuaName){
-            TextBox tb = new TextBox("Nombre de Usuario", "Escribe tu nombre:", 20, TextField.ANY);
-            Command cmdOk = new Command("Aceptar", Command.OK, 1);
-            Command cmdCancel = new Command("Cancelar", Command.CANCEL, 2);
+            final TextBox tb = new TextBox("Nombre de Usuario", "Escribe tu nombre:", 20, TextField.ANY);
+            final Command cmdOk = new Command("Aceptar", Command.OK, 1);
+            final Command cmdCancel = new Command("Cancelar", Command.CANCEL, 2);
             tb.addCommand(cmdOk);
             tb.addCommand(cmdCancel);
             tb.setCommandListener(new CommandListener() {
@@ -227,9 +227,9 @@ public class Main extends MIDlet implements CommandListener {
     private void verifyConfig(){
         apiKey = getItem("apiKey");
         if(apiKey == null || apiKey.isEmpty()) {
-            TextBox tb = new TextBox("API Key", "Escribe tu API key:", 100, TextField.ANY);
-            Command cmdOk = new Command("Aceptar", Command.OK, 1);
-            Command cmdCancel = new Command("Cancelar", Command.CANCEL, 2);
+            final TextBox tb = new TextBox("API Key", "Escribe tu API key:", 100, TextField.ANY);
+            final Command cmdOk = new Command("Aceptar", Command.OK, 1);
+            final Command cmdCancel = new Command("Cancelar", Command.CANCEL, 2);
             tb.addCommand(cmdOk);
             tb.addCommand(cmdCancel);
             tb.setCommandListener(new CommandListener(){
@@ -267,9 +267,9 @@ public class Main extends MIDlet implements CommandListener {
     private void verifyName() {
         String name = getItem("userName");
         if (name == null || name.isEmpty()) {
-            TextBox tb = new TextBox("Nombre de Usuario", "Escribe tu nombre:", 20, TextField.ANY);
-            Command cmdOk = new Command("Aceptar", Command.OK, 1);
-            Command cmdCancel = new Command("Cancelar", Command.CANCEL, 2);
+            final TextBox tb = new TextBox("Nombre de Usuario", "Escribe tu nombre:", 20, TextField.ANY);
+            final Command cmdOk = new Command("Aceptar", Command.OK, 1);
+            final Command cmdCancel = new Command("Cancelar", Command.CANCEL, 2);
             tb.addCommand(cmdOk);
             tb.addCommand(cmdCancel);
             tb.setCommandListener(new CommandListener() {
@@ -316,7 +316,7 @@ public class Main extends MIDlet implements CommandListener {
         }
         JSONArray historyArray;
         cmdHistorialchat = new List("Chats Anteriores", List.IMPLICIT);
-        Command cmdHistorialchatSalir = new Command("Salir", Command.BACK, 1);
+        final Command cmdHistorialchatSalir = new Command("Salir", Command.BACK, 1);
         cmdHistorialchat.addCommand(cmdHistorialchatSalir);
         try{
             historyArray = new JSONArray(hystory);
