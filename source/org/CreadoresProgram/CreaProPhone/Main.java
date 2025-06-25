@@ -23,7 +23,6 @@ public class Main extends MIDlet implements CommandListener {
     private Command cmdconfigActuaName;
     private Command cmdconfigmodelSelectCom;
     private List cmdconfigmodelSelect;
-    private Command cmdconfigmodelSelectAceptar;
     private Command cmdconfigBuscarAc;
     private List cmdHistorialchat;
     private TextBox tbEnviarChat;
@@ -70,8 +69,6 @@ public class Main extends MIDlet implements CommandListener {
         configForm.addCommand(cmdconfigBuscarAc);
         configForm.setCommandListener(this);
         cmdconfigmodelSelect.setCommandListener(this);
-        cmdconfigmodelSelectAceptar = new Command("Aceptar", Command.OK, 1);
-        cmdconfigmodelSelect.addCommand(cmdconfigmodelSelectAceptar);
         tbEnviarChat = new TextBox("Enviar Chat", "Escribe tu mensaje:", 9000, TextField.ANY);
         cmdEnviarChatsalir = new Command("Salir", Command.BACK, 1);
         cmdEnviarChatEnviar = new Command("Enviar", Command.OK, 2);
@@ -167,7 +164,10 @@ public class Main extends MIDlet implements CommandListener {
             }.start();
         }else if(c == cmdconfigmodelSelectCom){
             Display.getDisplay(this).setCurrent(cmdconfigmodelSelect);
-        }else if(c == cmdconfigmodelSelectAceptar){
+        }else if(c == List.SELECT_COMMAND){
+            if(d != cmdconfigmodelSelect){
+                return;
+            }
             int selectedIndex = cmdconfigmodelSelect.getSelectedIndex();
             MaxIAManager.setModel(selectedIndex);
         }else if(c == cmdconfigmodelSelectSalir){
@@ -341,6 +341,7 @@ public class Main extends MIDlet implements CommandListener {
                     JSONObject chat = historyArray.getJSONObject(i);
                     cmdHistorialchat.append(chat.getString("name"), null);
                 }
+                final JSONArray historyArrayFinal = historyArray;
                 cmdHistorialchat.setCommandListener(new CommandListener() {
                     public void commandAction(Command c, Displayable d) {
                         if (c == cmdHistorialchatSalir) {
@@ -348,7 +349,7 @@ public class Main extends MIDlet implements CommandListener {
                         } else {
                             int index = cmdHistorialchat.getSelectedIndex();
                             try {
-                                JSONObject chat = historyArray.getJSONObject(index);
+                                JSONObject chat = historyArrayFinal.getJSONObject(index);
                                 MaxIAManager.setHistory(chat.getJSONArray("history"));
                             } catch (Exception e) {
                                 e.printStackTrace();
