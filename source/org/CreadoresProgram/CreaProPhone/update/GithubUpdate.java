@@ -17,7 +17,7 @@ public class GithubUpdate {
     private static String repoUrl = "https://api.github.com/repos/Creadores-Program/CreaProPhone/releases/latest";
     private static String latestVersion = "1.0.0";
     
-    public static void checkForUpdates(MIDlet main boolean adNoUp) {
+    public static void checkForUpdates(MIDlet main, boolean adNoUp) {
         HttpConnection conn = null;
         InputStream is = null;
         StringBuffer response = new StringBuffer();

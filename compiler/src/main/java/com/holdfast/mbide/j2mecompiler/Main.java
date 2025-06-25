@@ -16,6 +16,7 @@ public class Main {
             comp.compile("midpapi"+File.separator+"api.jar", "source"+File.separator, "compiled");            
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
+            System.exit(1);
         }
 
     }
