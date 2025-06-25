@@ -7,7 +7,8 @@ import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.CommandListener;
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.Displayable;
-import javax.microedition.midlet.MIDlet;
+
+import org.CreadoresProgram.CreaProPhone.Main;
 
 import org.json.me.JSONObject;
 import org.json.me.JSONArray;
@@ -17,7 +18,7 @@ public class GithubUpdate {
     private static String repoUrl = "https://api.github.com/repos/Creadores-Program/CreaProPhone/releases/latest";
     private static String latestVersion = "1.0.0";
     
-    public static void checkForUpdates(MIDlet main, boolean adNoUp) {
+    public static void checkForUpdates(Main main, boolean adNoUp) {
         HttpConnection conn = null;
         InputStream is = null;
         StringBuffer response = new StringBuffer();

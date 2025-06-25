@@ -3,6 +3,8 @@ import javax.microedition.midlet.MIDlet;
 import javax.microedition.lcdui.*;
 import javax.microedition.rms.*;
 
+import java.util.Date;
+
 import org.json.me.JSONArray;
 import org.json.me.JSONObject;
 
@@ -27,6 +29,7 @@ public class Main extends MIDlet implements CommandListener {
     private TextBox tbEnviarChat;
     private Command cmdEnviarChatsalir;
     private Command cmdEnviarChatEnviar;
+    private Command cmdconfigmodelSelectSalir;
 
     private String apiKey;
     public void startApp() {
@@ -191,8 +194,6 @@ public class Main extends MIDlet implements CommandListener {
             Display.getDisplay(this).setCurrent(mainMenu);
         }else if(c == cmdconfigSalir){
             Display.getDisplay(this).setCurrent(mainMenu);
-        }else if(c == cmdconfigmodelSelectSalir){
-            Display.getDisplay(this).setCurrent(configForm);
         }
     }
     public Form mainMenu(){
