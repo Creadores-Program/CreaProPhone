@@ -19,11 +19,9 @@ jobs:
       - name: Build CreaProPhone with J2MEcompiler
         run: |-
           java -jar compiler/target/j2mecompiler-1.0-SNAPSHOT.jar
-          ls
-          mv CreaProPhone.jar $GITHUB_WORKSPACE/
-          ls $GITHUB_WORKSPACE
+          ls $GITHUB_WORKSPACE/compiled/
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: CreaProPhone
-          path: CreaProPhone.jar
+          path: compiled/CreaProPhone.jar
