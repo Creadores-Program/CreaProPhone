@@ -203,7 +203,7 @@ public class Main extends MIDlet implements CommandListener {
         try {
             RecordStore rs = RecordStore.openRecordStore(idkey, true);
             rs.addRecord(value.getBytes(), 0, value.getBytes().length);
-            rs.close();
+            rs.closeRecordStore();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -217,7 +217,7 @@ public class Main extends MIDlet implements CommandListener {
                 int recordId = re.nextRecordId();
                 data = rs.getRecord(recordId);
             }
-            rs.close();
+            rs.closeRecordStore();
             return data != null ? new String(data) : null;
         }catch (Exception e) {
             e.printStackTrace();
