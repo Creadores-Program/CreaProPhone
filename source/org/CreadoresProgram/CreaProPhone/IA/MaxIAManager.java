@@ -7,6 +7,7 @@ import org.json.me.JSONArray;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Date;
 public class MaxIAManager {
     private static String[] urlKeys = {
         "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=",
