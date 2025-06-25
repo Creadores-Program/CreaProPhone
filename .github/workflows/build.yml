@@ -17,7 +17,7 @@ jobs:
       - name: Build Compiler with Maven
         run: mvn -B package --file compiler/pom.xml
       - name: Build CreaProPhone with J2MEcompiler
-        run: -|
+        run: |-
           java -jar compiler/target/j2mecompiler-1.0-SNAPSHOT.jar
           ls
           mv CreaProPhone.jar $GITHUB_WORKSPACE/
