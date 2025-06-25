@@ -101,7 +101,7 @@ public class Compiler {
             }
         }
         zip.close();
-        previrify("prebuild" + File.separator + "temp.jar", "CreaProPhone.jar");
+        previrify("prebuild" + File.separator + "temp.jar", outpath+File.separator+"CreaProPhone.jar");
 
     }
 
