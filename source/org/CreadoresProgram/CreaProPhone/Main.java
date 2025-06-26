@@ -95,6 +95,7 @@ public class Main extends MIDlet implements CommandListener {
         }else if(c == cmdmainHistorial){
             Display.getDisplay(this).setCurrent(cmdHistorialchat);
         }else if(c == cmdmainSalir){
+            saveChat();
             notifyDestroyed();
         }else if(c == cmdconfigActuaKey){
             final TextBox tb = new TextBox("API Key Escribe tu API key:", "", 100, TextField.ANY);
