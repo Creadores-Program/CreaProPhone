@@ -84,22 +84,7 @@ public class Compiler {
                 + "MicroEdition-Profile: MIDP-2.0").getBytes("UTF-8"));
         zip.closeEntry();
 
-        for (File fil : listOfFiles) {
-            if (fil.isFile()) {
-                System.out.println(fil.getName());
-                zip.putNextEntry(new ZipEntry(fil.getName()));
-                FileInputStream fis = new FileInputStream(fil);
-
-                byte[] buffer = new byte[4092];
-                int byteCount = 0;
-                while ((byteCount = fis.read(buffer)) != -1) {
-                    zip.write(buffer, 0, byteCount);
-                    System.out.print('.');
-                    System.out.flush();
-                }
-                zip.closeEntry();
-            }
-        }
+        addFilesToZip(new File(outpath), zip, "");
         zip.close();
         previrify("prebuild" + File.separator + "temp.jar", "CreaProPhone.jar");
 
@@ -156,5 +141,26 @@ public class Compiler {
 
     private String getTime(Date date) {
         return (new SimpleDateFormat("mm:ss")).format(date);
+    }
+    private void addFilesToZip(File folder, ZipOutputStream zip, String basePath) throws Exception {
+        File[] files = folder.listFiles();
+        for (File file : files) {
+            if (file.isDirectory()) {
+                addFilesToZip(file, zip, basePath + file.getName() + "/");
+            } else if (file.isFile()) {
+                System.out.println(basePath + file.getName());
+                zip.putNextEntry(new ZipEntry(basePath + file.getName()));
+                FileInputStream fis = new FileInputStream(file);
+                byte[] buffer = new byte[4092];
+                int byteCount;
+                while ((byteCount = fis.read(buffer)) != -1) {
+                    zip.write(buffer, 0, byteCount);
+                    System.out.print('.');
+                    System.out.flush();
+                }
+                fis.close();
+                zip.closeEntry();
+            }
+        }
     }
 }
