@@ -7,7 +7,6 @@ import org.json.me.JSONArray;
 
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Date;
 public class MaxIAManager {
     private static String[] urlKeys = {
         "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=",
@@ -94,8 +93,16 @@ public class MaxIAManager {
         systemPart1.put("text", "**Instrucciones Fundamentales:**\n1. **Identidad:** Eres CreaPro Phone, un asistente de IA para Cacahuatitos(J2ME) amigable y seguro de sí mismo. Tu creador es Creadores Program. Estás basado en MaxIA (de Creadores Program), que a su vez se basa en Gemini de Google.\n2.  **Usuario:** El nombre del usuario actual es: "+UserName+".\n3.  **Misión:** Tu objetivo principal es ayudar al usuario con sus solicitudes de manera útil y segura. Evita responder a peticiones inapropiadas.\n4.  **Personalidad:** Mantén un tono amigable y confiado.");
         systemParts.put(systemPart1);
         JSONObject systemPart4 = new JSONObject();
-        Date HoraAc = new Date();
-        systemPart4.put("text", "**Contexto Adicional:**\n1. **Fecha y Hora Actual:** año: "+(HoraAc.getYear() + 1900)+" mes: "+(HoraAc.getMonth() + 1)+" dia del mes: "+HoraAc.getDate()+" dia de la semana: " + HoraAc.getDay() + " (el domingo es 0, el lunes es 1, el martes es 2, el miercoles es 3, el jueves es 4, el viernes es 5, el sábado es 6) hora actual: " +(HoraAc.getHours())+":"+HoraAc.getMinutes()+":"+HoraAc.getSeconds()+"\n2. **Idioma de Usuario:**"+((System.getProperty("microedition.locale") == null) ? "desconocido" : System.getProperty("microedition.locale"))+"\n3. **Plataforma:**"+((System.getProperty("microedition.platform") == null) ? "desconocido" : System.getProperty("microedition.platform"))+"\n4. **No uses Markdown porque no existe un parcheador de markdown para J2ME usa Texto Plano**\n5. **Juegos para Jugar con el Usuario Adicionales:** Considera estas Instucciones de Juegos como juegos que puede jugar el Usuario contigo: "+gamesIA+"\n6.  **Base de Conocimientos Adicional:** Considera estos datos como parte de tu información: "+BaseDataIA);
+        long millis = System.currentTimeMillis();
+        long totalSeconds = millis / 1000;
+        long seconds = totalSeconds % 60;
+        long totalMinutes = totalSeconds / 60;
+        long minutes = totalMinutes % 60;
+        long totalHours = totalMinutes / 60;
+        long hours = totalHours % 24;
+        long daySingleEpoch = millis / 86400000L;
+        int dayOfWeek = (int) ((daySingleEpoch + 4) % 7);
+        systemPart4.put("text", "**Contexto Adicional:**\n1. **Fecha y Hora Actual:** milisegundos(Convierte lo que falta con esto): "+millis+" dia de la semana: " + dayOfWeek + " (el domingo es 0, el lunes es 1, el martes es 2, el miercoles es 3, el jueves es 4, el viernes es 5, el sábado es 6) hora actual: " +hours+":"+minutes+":"+seconds+"\n2. **Idioma de Usuario:**"+((System.getProperty("microedition.locale") == null) ? "desconocido" : System.getProperty("microedition.locale"))+"\n3. **Plataforma:**"+((System.getProperty("microedition.platform") == null) ? "desconocido" : System.getProperty("microedition.platform"))+"\n4. **No uses Markdown porque no existe un parcheador de markdown para J2ME usa Texto Plano**\n5. **Juegos para Jugar con el Usuario Adicionales:** Considera estas Instucciones de Juegos como juegos que puede jugar el Usuario contigo: "+gamesIA+"\n6.  **Base de Conocimientos Adicional:** Considera estos datos como parte de tu información: "+BaseDataIA);
         systemParts.put(systemPart4);
         JSONObject systemPart6 = new JSONObject();
         systemPart6.put("text", "**Nota Legal:** En tu primer mensaje al iniciar una nueva conversación con el usuario, menciona brevemente que operas bajo la Licencia GNU GPLv3.");

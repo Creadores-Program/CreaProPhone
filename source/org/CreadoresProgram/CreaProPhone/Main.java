@@ -3,7 +3,7 @@ import javax.microedition.midlet.MIDlet;
 import javax.microedition.lcdui.*;
 import javax.microedition.rms.*;
 
-import java.util.Date;
+import java.util.Random;
 
 import org.json.me.JSONArray;
 import org.json.me.JSONObject;
@@ -106,7 +106,7 @@ public class Main extends MIDlet implements CommandListener {
                 public void commandAction(Command c, Displayable d) {
                     if (c == cmdOk) {
                         apiKey = ((TextBox)d).getString();
-                        if (apiKey == null || apiKey.isEmpty()) {
+                        if (apiKey == null || apiKey.length() == 0) {
                             Alert alert = new Alert("Error", "Debes ingresar una API Key válida.", null, AlertType.ERROR);
                             alert.setTimeout(Alert.FOREVER);
                             alert.setCommandListener(new CommandListener() {
@@ -135,7 +135,7 @@ public class Main extends MIDlet implements CommandListener {
                 public void commandAction(Command c, Displayable d) {
                     if (c == cmdOk) {
                         String userName = ((TextBox)d).getString();
-                        if (userName == null || userName.isEmpty() || userName.length() < 5) {
+                        if (userName == null || userName.length() == 0 || userName.length() < 5) {
                             Alert alert = new Alert("Error", "El nombre debe tener entre 5 y 20 caracteres.", null, AlertType.ERROR);
                             alert.setTimeout(Alert.FOREVER);
                             alert.setCommandListener(new CommandListener() {
@@ -174,14 +174,14 @@ public class Main extends MIDlet implements CommandListener {
             Display.getDisplay(this).setCurrent(configForm);
         }else if(c == cmdEnviarChatEnviar){
             String message = tbEnviarChat.getString();
-            if (message == null || message.isEmpty()) {
+            if (message == null || message.length() == 0) {
                 return;
             }
             mainMenu.append("Tú: " + message + "\n");
             String response;
             try{
                 response = MaxIAManager.promptGemini(message, apiKey);
-                if (response == null || response.isEmpty()) {
+                if (response == null || response.length() == 0) {
                     throw new Exception("No se pudo obtener una respuesta válida.");
                 }
                 mainMenu.append("CreaProPhone: " + response + "\n");
@@ -226,7 +226,7 @@ public class Main extends MIDlet implements CommandListener {
     }
     private void verifyConfig(){
         apiKey = getItem("apiKey");
-        if(apiKey == null || apiKey.isEmpty()) {
+        if(apiKey == null || apiKey.length() == 0) {
             final TextBox tb = new TextBox("API Key", "Escribe tu API key:", 100, TextField.ANY);
             final Command cmdOk = new Command("Aceptar", Command.OK, 1);
             final Command cmdCancel = new Command("Cancelar", Command.CANCEL, 2);
@@ -236,7 +236,7 @@ public class Main extends MIDlet implements CommandListener {
                 public void commandAction(Command c, Displayable d) {
                     if (c == cmdOk) {
                         apiKey = ((TextBox)d).getString();
-                        if (apiKey == null || apiKey.isEmpty()) {
+                        if (apiKey == null || apiKey.length() == 0) {
                             Alert alert = new Alert("Error", "Debes ingresar una API Key válida.", null, AlertType.ERROR);
                             alert.setTimeout(Alert.FOREVER);
                             alert.setCommandListener(new CommandListener() {
@@ -266,7 +266,7 @@ public class Main extends MIDlet implements CommandListener {
     }
     private void verifyName() {
         String name = getItem("userName");
-        if (name == null || name.isEmpty()) {
+        if (name == null || name.length() == 0) {
             final TextBox tb = new TextBox("Nombre de Usuario", "Escribe tu nombre:", 20, TextField.ANY);
             final Command cmdOk = new Command("Aceptar", Command.OK, 1);
             final Command cmdCancel = new Command("Cancelar", Command.CANCEL, 2);
@@ -276,7 +276,7 @@ public class Main extends MIDlet implements CommandListener {
                 public void commandAction(Command c, Displayable d) {
                     if (c == cmdOk) {
                         String userName = ((TextBox)d).getString();
-                        if (userName == null || userName.isEmpty() || userName.length() < 5) {
+                        if (userName == null || userName.length() == 0 || userName.length() < 5) {
                             Alert alert = new Alert("Error", "El nombre debe tener entre 5 y 20 caracteres.", null, AlertType.ERROR);
                             alert.setTimeout(Alert.FOREVER);
                             alert.setCommandListener(new CommandListener() {
@@ -311,7 +311,7 @@ public class Main extends MIDlet implements CommandListener {
     }
     private void verifyHystory() {
         String hystory = getItem("historyChats");
-        if (hystory == null || hystory.isEmpty()) {
+        if (hystory == null || hystory.length() == 0) {
             setItem("historyChats", "[]");
         }
         JSONArray historyArray;
@@ -379,8 +379,7 @@ public class Main extends MIDlet implements CommandListener {
                 historyArray = newChat;
             }
             JSONObject chatObject = new JSONObject();
-            Date timeCreatedCekj = new Date();
-            chatObject.put("name", (timeCreatedCekj.getYear()+1900)+"/"+(timeCreatedCekj.getMonth()+1)+"/"+timeCreatedCekj.getDate()+" "+timeCreatedCekj.getHours()+":"+timeCreatedCekj.getMinutes()+" "+chat.getJSONObject(0).getJSONArray("parts").getJSONObject(0).getString("text")+" "+Math.random());
+            chatObject.put("name", System.currentTimeMillis()+" "+chat.getJSONObject(0).getJSONArray("parts").getJSONObject(0).getString("text")+" "+(new Random().nextInt()));
             chatObject.put("history", chat);
             historyArray.put(chatObject);
             setItem("historyChats", historyArray.toString());
