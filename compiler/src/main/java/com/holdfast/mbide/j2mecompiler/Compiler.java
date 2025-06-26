@@ -69,6 +69,7 @@ public class Compiler {
         File f = new File("prebuild" + File.separator + "temp.jar");
         f.mkdirs();
         f.delete();
+        copyResources(new File(srcpath), new File(outpath));
 
         ZipOutputStream zip = new ZipOutputStream(new FileOutputStream(f));
 
@@ -160,6 +161,27 @@ public class Compiler {
                 }
                 fis.close();
                 zip.closeEntry();
+            }
+        }
+    }
+    private void copyResources(File src, File dest) throws Exception {
+        File[] files = src.listFiles();
+        for (int i = 0; i < files.length; i++) {
+            File file = files[i];
+            if (file.isDirectory()) {
+                File newDest = new File(dest, file.getName());
+                newDest.mkdir();
+                copyResources(file, newDest);
+            } else if (!file.getName().endsWith(".java")) {
+                FileInputStream in = new FileInputStream(file);
+                FileOutputStream out = new FileOutputStream(new File(dest, file.getName()));
+                byte[] buf = new byte[4096];
+                int len;
+                while ((len = in.read(buf)) > 0) {
+                    out.write(buf, 0, len);
+                }
+                in.close();
+                out.close();
             }
         }
     }

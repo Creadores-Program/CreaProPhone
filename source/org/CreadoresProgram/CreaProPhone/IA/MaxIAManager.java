@@ -7,6 +7,7 @@ import org.json.me.JSONArray;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.InputStreamReader;
 public class MaxIAManager {
     private static String[] urlKeys = {
         "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=",
@@ -38,10 +39,12 @@ public class MaxIAManager {
                 throw new Exception("HTTP error code: " + responseCode);
             }
             is = conn.openInputStream();
+            InputStreamReader reader = new InputStreamReader(is, "UTF-8");
             int ch;
-            while ((ch = is.read()) != -1) {
+            while ((ch = reader.read()) != -1) {
                 sb.append((char) ch);
             }
+            reader.close();
             return sb.toString();
         } catch (Exception e) {
             e.printStackTrace();

@@ -69,7 +69,7 @@ public class Main extends MIDlet implements CommandListener {
         configForm.addCommand(cmdconfigBuscarAc);
         configForm.setCommandListener(this);
         cmdconfigmodelSelect.setCommandListener(this);
-        tbEnviarChat = new TextBox("Enviar Chat", "Escribe tu mensaje:", 9000, TextField.ANY);
+        tbEnviarChat = new TextBox("Enviar Chat Escribe tu mensaje:", "", 9000, TextField.ANY);
         cmdEnviarChatsalir = new Command("Salir", Command.BACK, 1);
         cmdEnviarChatEnviar = new Command("Enviar", Command.OK, 2);
         tbEnviarChat.addCommand(cmdEnviarChatsalir);
@@ -97,7 +97,7 @@ public class Main extends MIDlet implements CommandListener {
         }else if(c == cmdmainSalir){
             notifyDestroyed();
         }else if(c == cmdconfigActuaKey){
-            final TextBox tb = new TextBox("API Key", "Escribe tu API key:", 100, TextField.ANY);
+            final TextBox tb = new TextBox("API Key Escribe tu API key:", "", 100, TextField.ANY);
             final Command cmdOk = new Command("Aceptar", Command.OK, 1);
             final Command cmdCancel = new Command("Cancelar", Command.CANCEL, 2);
             tb.addCommand(cmdOk);
@@ -126,7 +126,7 @@ public class Main extends MIDlet implements CommandListener {
             });
             Display.getDisplay(this).setCurrent(tb);
         }else if(c == cmdconfigActuaName){
-            final TextBox tb = new TextBox("Nombre de Usuario", "Escribe tu nombre:", 20, TextField.ANY);
+            final TextBox tb = new TextBox("Nombre de Usuario Escribe tu nombre:", "", 20, TextField.ANY);
             final Command cmdOk = new Command("Aceptar", Command.OK, 1);
             final Command cmdCancel = new Command("Cancelar", Command.CANCEL, 2);
             tb.addCommand(cmdOk);
@@ -227,7 +227,7 @@ public class Main extends MIDlet implements CommandListener {
     private void verifyConfig(){
         apiKey = getItem("apiKey");
         if(apiKey == null || apiKey.length() == 0) {
-            final TextBox tb = new TextBox("API Key", "Escribe tu API key:", 100, TextField.ANY);
+            final TextBox tb = new TextBox("API Key Escribe tu API key:", "", 100, TextField.ANY);
             final Command cmdOk = new Command("Aceptar", Command.OK, 1);
             final Command cmdCancel = new Command("Cancelar", Command.CANCEL, 2);
             tb.addCommand(cmdOk);
@@ -267,7 +267,7 @@ public class Main extends MIDlet implements CommandListener {
     private void verifyName() {
         String name = getItem("userName");
         if (name == null || name.length() == 0) {
-            final TextBox tb = new TextBox("Nombre de Usuario", "Escribe tu nombre:", 20, TextField.ANY);
+            final TextBox tb = new TextBox("Nombre de Usuario Escribe tu nombre:", "", 20, TextField.ANY);
             final Command cmdOk = new Command("Aceptar", Command.OK, 1);
             final Command cmdCancel = new Command("Cancelar", Command.CANCEL, 2);
             tb.addCommand(cmdOk);

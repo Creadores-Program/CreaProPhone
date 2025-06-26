@@ -14,6 +14,7 @@ import org.json.me.JSONObject;
 import org.json.me.JSONArray;
 
 import java.io.InputStream;
+import java.io.InputStreamReader;
 public class GithubUpdate {
     private static String repoUrl = "https://api.github.com/repos/Creadores-Program/CreaProPhone/releases/latest";
     private static String latestVersion = "1.0.0";
@@ -30,10 +31,12 @@ public class GithubUpdate {
             int responseCode = conn.getResponseCode();
             if (responseCode == HttpConnection.HTTP_OK) {
                 is = conn.openInputStream();
+                InputStreamReader reader = new InputStreamReader(is, "UTF-8");
                 int ch;
-                while ((ch = is.read()) != -1) {
+                while ((ch = reader.read()) != -1) {
                     response.append((char) ch);
                 }
+                reader.close();
             }else{
                 throw new Exception("Error al conectar con el servidor: " + responseCode);
             }
