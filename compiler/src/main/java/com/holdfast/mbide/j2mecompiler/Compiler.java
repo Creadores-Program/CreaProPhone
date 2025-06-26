@@ -101,7 +101,7 @@ public class Compiler {
             }
         }
         zip.close();
-        previrify("prebuild" + File.separator + "temp.jar", outpath+File.separator+"CreaProPhone.jar");
+        previrify("prebuild" + File.separator + "temp.jar", "CreaProPhone.jar");
 
     }
 
@@ -125,6 +125,19 @@ public class Compiler {
                 stream.close();
             }
         }
+        StringBuilder errorConsole = new StringBuilder();
+        InputStream errorStream = p.getErrorStream();
+        try {
+            int read;
+            byte[] buf = new byte[1024 * 99];
+            while ((read = errorStream.read(buf)) > 0) {
+                errorConsole.append(new String(buf, 0, read));
+            }
+        } finally {
+            if (errorStream != null) {
+                errorStream.close();
+            }
+        }
 
         p.waitFor();
         time2 = System.currentTimeMillis();
@@ -132,7 +145,12 @@ public class Compiler {
         java.util.Date differneceDate = new Date(difference);
 
         final String result = console.toString().trim();
+        final String errorResult = errorConsole.toString().trim();
         System.out.println(result);
+        if (!errorResult.isEmpty()) {
+            System.out.println("Errors:");
+            System.out.println(errorResult);
+        }
         System.out.println("Assembly completed in " + getTime(differneceDate));
     }
 
