@@ -262,6 +262,8 @@ public class Main extends MIDlet implements CommandListener {
                 }
             });
             Display.getDisplay(this).setCurrent(tb);
+        }else{
+            verifyName();
         }
     }
     private void verifyName() {
