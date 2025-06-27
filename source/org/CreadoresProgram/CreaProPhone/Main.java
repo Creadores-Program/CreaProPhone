@@ -374,9 +374,8 @@ public class Main extends MIDlet implements CommandListener {
                 return;
             }
             if (historyArray.length() > 10){
-                Object first = historyArray.get(0);
                 JSONArray newChat = new JSONArray();
-                for (int i = 1; i < chat.length(); i++) {
+                for (int i = 1; i < historyArray.length(); i++) {
                     newChat.put(historyArray.get(i));
                 }
                 historyArray = newChat;
