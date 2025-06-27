@@ -79,7 +79,7 @@ public class Compiler {
                 + "Created-By: 1.8.0_25-b18 (Oracle Corporation)\n"
                 + "MIDlet-1: CreaProPhone, /icon.png, org.CreadoresProgram.CreaProPhone.Main\n"
                 + "MIDlet-Vendor: Creadores Program\n"
-                + "MIDlet-Version: 1.0.0\n"
+                + "MIDlet-Version: 1.0.0-beta\n"
                 + "MIDlet-Name: CreaProPhone\n"
                 + "MicroEdition-Configuration: CLDC-1.1\n"
                 + "MicroEdition-Profile: MIDP-2.0").getBytes("UTF-8"));
