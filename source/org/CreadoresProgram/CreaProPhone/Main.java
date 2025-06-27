@@ -174,7 +174,7 @@ public class Main extends MIDlet implements CommandListener {
         }else if(c == cmdconfigmodelSelectSalir){
             Display.getDisplay(this).setCurrent(configForm);
         }else if(c == cmdEnviarChatEnviar){
-            String message = tbEnviarChat.getString();
+            final String message = tbEnviarChat.getString();
             if (message == null || message.length() == 0) {
                 return;
             }
