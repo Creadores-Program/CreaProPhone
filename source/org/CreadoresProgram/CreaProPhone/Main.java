@@ -203,7 +203,13 @@ public class Main extends MIDlet implements CommandListener {
     private void setItem(String idkey, String value){
         try {
             RecordStore rs = RecordStore.openRecordStore(idkey, true);
-            rs.addRecord(value.getBytes(), 0, value.getBytes().length);
+            RecordEnumeration re = rs.enumerateRecords(null, null, false);
+            if (re.hasNextElement()) {
+                int recordId = re.nextRecordId();
+                rs.setRecord(recordId, value.getBytes(), 0, value.getBytes().length);
+            } else {
+                rs.addRecord(value.getBytes(), 0, value.getBytes().length);
+            }
             rs.closeRecordStore();
         } catch (Exception e) {
             e.printStackTrace();
