@@ -179,16 +179,20 @@ public class Main extends MIDlet implements CommandListener {
                 return;
             }
             mainMenu.append("Tú: " + message + "\n");
-            String response;
-            try{
-                response = MaxIAManager.promptGemini(message, apiKey);
-                if (response == null || response.length() == 0) {
-                    throw new Exception("No se pudo obtener una respuesta válida.");
+            new Thread(){
+                public void run() {
+                    String response;
+                    try {
+                        response = MaxIAManager.promptGemini(message, apiKey);
+                        if (response == null || response.length() == 0) {
+                            throw new Exception("No se pudo obtener una respuesta válida.");
+                        }
+                        mainMenu.append("CreaProPhone: " + response + "\n");
+                    }catch(Exception e){
+                        mainMenu.append("CreaProPhone: Lo Siento!, Mi Celebro da vueltas y no puedo responder a tu pregunta, por favor intenta de nuevo mas tarde.\n");
+                    }
                 }
-                mainMenu.append("CreaProPhone: " + response + "\n");
-            }catch(Exception e){
-                mainMenu.append("CreaProPhone: Lo Siento!, Mi Celebro da vueltas y no puedo responder a tu pregunta, por favor intenta de nuevo mas tarde.\n");
-            }
+            }.start();
             tbEnviarChat.setString("");
             Display.getDisplay(this).setCurrent(mainMenu);
         }else if(c == cmdEnviarChatsalir){
@@ -356,10 +360,25 @@ public class Main extends MIDlet implements CommandListener {
                         if (c == cmdHistorialchatSalir) {
                             Display.getDisplay(Main.this).setCurrent(mainMenu);
                         } else {
+                            saveChat();
                             int index = cmdHistorialchat.getSelectedIndex();
                             try {
                                 JSONObject chat = historyArrayFinal.getJSONObject(index);
                                 MaxIAManager.setHistory(chat.getJSONArray("history"));
+                                mainMenu.deleteAll();
+                                mainMenu.addCommand(cmdmainConfig);
+                                mainMenu.addCommand(cmdmainEnviarChat);
+                                mainMenu.addCommand(cmdmainBorrarChat);
+                                mainMenu.addCommand(cmdmainHistorial);
+                                mainMenu.addCommand(cmdmainSalir);
+                                for (int j = 0; j < MaxIAManager.getHistory().length(); j++) {
+                                    JSONObject part = MaxIAManager.getHistory().getJSONObject(j);
+                                    if( part.getString("role").equals("user") ){
+                                        mainMenu.append("Tú: " + part.getJSONArray("parts").getJSONObject(0).getString("text") + "\n");
+                                    }else{
+                                        mainMenu.append("CreaProPhone: " + part.getJSONArray("parts").getJSONObject(0).getString("text") + "\n");
+                                    }
+                                }
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
