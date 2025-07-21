@@ -98,7 +98,7 @@ public class Main extends MIDlet implements CommandListener {
             saveChat();
             notifyDestroyed();
         }else if(c == cmdconfigActuaKey){
-            final TextBox tb = new TextBox("API Key Escribe tu API key:", "", 100, TextField.ANY);
+            final TextBox tb = new TextBox("API Key Escribe tu API key:", "", 100, TextField.PASSWORD);
             final Command cmdOk = new Command("Aceptar", Command.OK, 1);
             final Command cmdCancel = new Command("Cancelar", Command.CANCEL, 2);
             tb.addCommand(cmdOk);
@@ -238,7 +238,7 @@ public class Main extends MIDlet implements CommandListener {
     private void verifyConfig(){
         apiKey = getItem("apiKey");
         if(apiKey == null || apiKey.length() == 0) {
-            final TextBox tb = new TextBox("API Key Escribe tu API key:", "", 100, TextField.ANY);
+            final TextBox tb = new TextBox("API Key Escribe tu API key:", "", 100, TextField.PASSWORD);
             final Command cmdOk = new Command("Aceptar", Command.OK, 1);
             final Command cmdCancel = new Command("Cancelar", Command.CANCEL, 2);
             tb.addCommand(cmdOk);
