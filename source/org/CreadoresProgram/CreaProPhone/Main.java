@@ -55,11 +55,9 @@ public class Main extends MIDlet implements CommandListener {
         cmdconfigActuaName = new Command("Actualizar Nombre", Command.SCREEN, 3);
         cmdconfigmodelSelectCom = new Command("Seleccionar Modelo de IA", Command.SCREEN, 4);
         cmdconfigmodelSelect = new List("Seleccionar Modelo de IA", List.IMPLICIT);
-        cmdconfigmodelSelect.append("Gemini Flash 2.5", null);
-        cmdconfigmodelSelect.append("Gemini Flash Lite 2.5", null);
-        cmdconfigmodelSelect.append("Gemini Pro 2.5", null);
-        cmdconfigmodelSelect.append("Gemini Flash 2.0", null);
-        cmdconfigmodelSelect.append("Gemini Flash Lite 2.0", null);
+        cmdconfigmodelSelect.append("Gemini Flash", null);
+        cmdconfigmodelSelect.append("Gemini Flash Lite", null);
+        cmdconfigmodelSelect.append("Gemini Pro", null);
         cmdconfigBuscarAc = new Command("Buscar Actualizaciones", Command.SCREEN, 5);
         cmdconfigmodelSelectSalir = new Command("Salir", Command.BACK, 1);
         cmdconfigmodelSelect.addCommand(cmdconfigmodelSelectSalir);
