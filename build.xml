@@ -1,17 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="CreaProPhone" default="default" basedir=".">
+<project name="CreaProPhone" default="jar" basedir=".">
     <description>Un Asistente de IA basado en Google Gemini para Cacahuatitos.</description>
+
     <property file="nbproject/project.properties"/>
+
+    <property name="src.dir" value="src"/>
+    <property name="build.dir" value="build"/>
+    <property name="build.classes.dir" value="${build.dir}/classes"/>
+    <property name="prebuild.dir" value="prebuild"/>
+    <property name="dist.dir" value="dist"/>
+    <property name="dist.jar" value="${dist.dir}/CreaProPhone.jar"/>
     <property name="lib.dir" value="lib"/>
-    <path id="compile.classpath">
-        <fileset dir="${lib.dir}" erroronmissing="false">
-            <include name="*.jar"/>
-        </fileset>
-    </path>
+    <property name="proguard.dir" value="proguard"/>
+
     <target name="clean">
         <delete dir="${build.dir}"/>
+        <delete dir="${prebuild.dir}"/>
         <delete dir="${dist.dir}"/>
     </target>
+
+    <target name="init">
+        <mkdir dir="${build.classes.dir}"/>
+        <mkdir dir="${prebuild.dir}"/>
+        <mkdir dir="${dist.dir}"/>
+        <mkdir dir="${lib.dir}"/>
+        <mkdir dir="${proguard.dir}"/>
+    </target>
+
     <target name="compile" depends="init">
         <javac srcdir="${src.dir}" 
                destdir="${build.classes.dir}" 
@@ -20,7 +35,9 @@
                encoding="${javac.encoding}" 
                nowarn="true" 
                includeantruntime="false">
-            <classpath refid="compile.classpath"/>
+            <classpath>
+                <fileset dir="${lib.dir}" includes="*.jar"/>
+            </classpath>
         </javac>
 
         <copy todir="${build.classes.dir}">
@@ -29,8 +46,9 @@
             </fileset>
         </copy>
     </target>
-    <target name="jar" depends="compile">
-        <jar destfile="${dist.jar}" basedir="${build.classes.dir}">
+
+    <target name="prejar" depends="compile">
+        <jar destfile="${prebuild.dir}/temp.jar" basedir="${build.classes.dir}">
             <manifest>
                 <attribute name="Manifest-Version" value="1.0"/>
                 <attribute name="MIDlet-1" value="${manifest.midlet-1}"/>
@@ -41,5 +59,24 @@
                 <attribute name="MicroEdition-Profile" value="${platform.profile}"/>
             </manifest>
         </jar>
+    </target>
+
+    <target name="jar" depends="prejar">
+        <java jar="${proguard.dir}/proguard.jar" fork="true" failonerror="true">
+            <arg value="-injars"/>
+            <arg value="${prebuild.dir}/temp.jar"/>
+            <arg value="-outjars"/>
+            <arg value="${dist.jar}"/>
+            <arg value="-libraryjars"/>
+            <arg value="${proguard.dir}/cldcapi11.jar"/>
+            <arg value="-libraryjars"/>
+            <arg value="${proguard.dir}/midpapi20.jar"/>
+            <arg value="-microedition"/>
+            <arg value="-keep"/>
+            <arg value="public class * extends javax.microedition.midlet.MIDlet"/>
+            <arg value="-dontoptimize"/>
+        </java>
+
+        <echo message="JAR J2ME preverificado con éxito en: ${dist.jar}"/>
     </target>
 </project>
