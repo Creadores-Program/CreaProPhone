@@ -170,6 +170,7 @@ public class Main extends MIDlet implements CommandListener {
             }
             int selectedIndex = cmdconfigmodelSelect.getSelectedIndex();
             MaxIAManager.setModel(selectedIndex);
+            setItem("selectedModel", String.valueOf(selectedIndex));
         }else if(c == cmdconfigmodelSelectSalir){
             Display.getDisplay(this).setCurrent(configForm);
         }else if(c == cmdEnviarChatEnviar){
@@ -275,6 +276,7 @@ public class Main extends MIDlet implements CommandListener {
         }else{
             verifyName();
         }
+        verifyModel();
     }
     private void verifyName() {
         String name = getItem("userName");
@@ -389,6 +391,21 @@ public class Main extends MIDlet implements CommandListener {
         }catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void verifyModel() {
+        String modelIndexStr = getItem("selectedModel");
+        int modelIndex = 0;
+        if (modelIndexStr != null && modelIndexStr.length() > 0) {
+            try {
+                modelIndex = Integer.parseInt(modelIndexStr);
+            } catch (Exception e) {
+                modelIndex = 0;
+            }
+        } else {
+            setItem("selectedModel", "0");
+        }
+        MaxIAManager.setModel(modelIndex);
     }
     private void saveChat(){
         try {
