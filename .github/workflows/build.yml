@@ -1,5 +1,16 @@
 name: CI
-on: [push, pull_request]
+on:
+  push:
+    paths-ignore:
+      - 'README.md'
+  pull_request:
+    paths-ignore:
+      - 'README.md'
+  release:
+    types: [published]
+
+permissions:
+  contents: write
 jobs:
   build:
     runs-on: ubuntu-latest
