@@ -8,19 +8,18 @@ jobs:
       matrix:
         java: [ '8' ]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Set up JDK ${{ matrix.java }}
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           java-version: ${{ matrix.java }}
           distribution: 'temurin'
-      - name: Build Compiler with Maven
-        run: mvn -B package --file compiler/pom.xml
-      - name: Build CreaProPhone with J2MEcompiler
-        run: |-
-          java -jar compiler/target/j2mecompiler-1.0-SNAPSHOT.jar
+      - name: Install Ant
+        run: sudo apt-get update && sudo apt-get install -y ant
+      - name: Build App
+        run: ant -f build.xml jar
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: CreaProPhone
-          path: CreaProPhone.jar
+          path: dist/*.jar
