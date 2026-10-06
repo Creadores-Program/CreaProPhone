@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="CreaProPhone" default="jar" basedir=".">
-    <description>Un Asistente de IA basado en Google Gemini para Cacahuatitos.</description>
+    <description>Asistente J2ME para CreaProPhone</description>
 
     <property file="nbproject/project.properties"/>
 
-    <property name="src.dir" value="src"/>
+    <property name="javac.source" value="1.3"/>
+    <property name="javac.target" value="1.1"/>
+    <property name="javac.encoding" value="UTF-8"/>
+
+    <property name="manifest.midlet-1" value="CreaProPhone, /icon.png, org.CreadoresProgram.CreaProPhone.Main"/>
+    <property name="manifest.midlet-vendor" value="Creadores Program"/>
+    <property name="manifest.midlet-version" value="1.1.0-beta"/>
+    <property name="manifest.midlet-name" value="CreaProPhone"/>
+    <property name="platform.configuration" value="CLDC-1.1"/>
+    <property name="platform.profile" value="MIDP-2.0"/>
+
+    <property name="src.dir" value="source"/>
     <property name="build.dir" value="build"/>
     <property name="build.classes.dir" value="${build.dir}/classes"/>
     <property name="prebuild.dir" value="prebuild"/>
@@ -12,6 +23,11 @@
     <property name="dist.jar" value="${dist.dir}/CreaProPhone.jar"/>
     <property name="lib.dir" value="lib"/>
     <property name="proguard.dir" value="proguard"/>
+
+    <path id="j2me.classpath">
+        <fileset dir="${lib.dir}" includes="*.jar"/>
+        <fileset dir="${proguard.dir}" includes="cldcapi11.jar, midpapi20.jar"/>
+    </path>
 
     <target name="clean">
         <delete dir="${build.dir}"/>
@@ -34,10 +50,9 @@
                target="${javac.target}" 
                encoding="${javac.encoding}" 
                nowarn="true" 
-               includeantruntime="false">
-            <classpath>
-                <fileset dir="${lib.dir}" includes="*.jar"/>
-            </classpath>
+               includeantruntime="false"
+               bootclasspathref="j2me.classpath">
+            <compilerarg value="-Xbootclasspath/p:${toString:j2me.classpath}"/>
         </javac>
 
         <copy todir="${build.classes.dir}">
@@ -51,6 +66,8 @@
         <jar destfile="${prebuild.dir}/temp.jar" basedir="${build.classes.dir}">
             <manifest>
                 <attribute name="Manifest-Version" value="1.0"/>
+                <attribute name="Ant-Version" value="Apache Ant 1.9.4"/>
+                <attribute name="Created-By" value="1.8.0_25-b18 (Oracle Corporation)"/>
                 <attribute name="MIDlet-1" value="${manifest.midlet-1}"/>
                 <attribute name="MIDlet-Vendor" value="${manifest.midlet-vendor}"/>
                 <attribute name="MIDlet-Version" value="${manifest.midlet-version}"/>
@@ -77,6 +94,6 @@
             <arg value="-dontoptimize"/>
         </java>
 
-        <echo message="JAR J2ME preverificado con éxito en: ${dist.jar}"/>
+        <echo message="JAR J2ME generado y preverificado en: ${dist.jar}"/>
     </target>
 </project>
