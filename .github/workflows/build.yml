@@ -19,7 +19,12 @@ jobs:
       - name: Build App
         run: ant -f build.xml jar
       - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: CreaProPhone
           path: dist/*.jar
+      - name: Attach Jar to GitHub Release
+        if: github.event_name == 'release'
+        uses: softprops/action-gh-release@v3
+        with:
+          files: dist/*.jar
