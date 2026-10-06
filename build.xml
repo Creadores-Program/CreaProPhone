@@ -1,5 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="CreaProPhone" default="default" basedir=".">
     <description>Un Asistente de IA basado en Google Gemini para Cacahuatitos.</description>
-    <import file="nbproject/build-impl.xml"/>
+    <property file="nbproject/project.properties"/>
+    <property name="lib.dir" value="lib"/>
+    <path id="compile.classpath">
+        <fileset dir="${lib.dir}" erroronmissing="false">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+        <delete dir="${dist.dir}"/>
+    </target>
+    <target name="compile" depends="init">
+        <javac srcdir="${src.dir}" 
+               destdir="${build.classes.dir}" 
+               source="${javac.source}" 
+               target="${javac.target}" 
+               encoding="${javac.encoding}" 
+               nowarn="true" 
+               includeantruntime="false">
+            <classpath refid="compile.classpath"/>
+        </javac>
+
+        <copy todir="${build.classes.dir}">
+            <fileset dir="${src.dir}">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="jar" depends="compile">
+        <jar destfile="${dist.jar}" basedir="${build.classes.dir}">
+            <manifest>
+                <attribute name="Manifest-Version" value="1.0"/>
+                <attribute name="MIDlet-1" value="${manifest.midlet-1}"/>
+                <attribute name="MIDlet-Vendor" value="${manifest.midlet-vendor}"/>
+                <attribute name="MIDlet-Version" value="${manifest.midlet-version}"/>
+                <attribute name="MIDlet-Name" value="${manifest.midlet-name}"/>
+                <attribute name="MicroEdition-Configuration" value="${platform.configuration}"/>
+                <attribute name="MicroEdition-Profile" value="${platform.profile}"/>
+            </manifest>
+        </jar>
+    </target>
 </project>
