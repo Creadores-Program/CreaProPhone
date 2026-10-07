@@ -89,6 +89,8 @@
             <arg value="-libraryjars"/>
             <arg value="${proguard.dir}/midpapi20.jar"/>
             <arg value="-microedition"/>
+            <arg value="-dontwarn"/>
+            <arg value="tech.alicesworld.ModernConnector.**"/>
             <arg value="-keep"/>
             <arg value="public class * extends javax.microedition.midlet.MIDlet"/>
             <arg value="-dontoptimize"/>
