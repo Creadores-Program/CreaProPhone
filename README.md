@@ -41,6 +41,7 @@ Consulta el archivo LICENSE para más detalles.
 
 ---
 
-**Creadores Program ©2025**  
+**Creadores Program ©2026**  
 **"La Revolución del Código"**
+
 ¡Llevando la IA a todos los dispositivos!
