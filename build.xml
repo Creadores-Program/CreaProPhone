@@ -81,7 +81,7 @@
     <target name="jar" depends="prejar">
         <java jar="${proguard.dir}/proguard.jar" fork="true" failonerror="true">
             <arg value="-injars"/>
-            <arg value="${prebuild.dir}/temp.jar:${lib.dir}/*.jar"/>
+            <arg value="${prebuild.dir}/temp.jar${path.separator}${lib.dir}/*.jar"/>
             <arg value="-outjars"/>
             <arg value="${dist.jar}"/>
             <arg value="-libraryjars"/>
