@@ -63,7 +63,11 @@
     </target>
 
     <target name="prejar" depends="compile">
-        <jar destfile="${prebuild.dir}/temp.jar" basedir="${build.classes.dir}">
+        <jar destfile="${prebuild.dir}/temp.jar">
+            <fileset dir="${build.classes.dir}"/>
+        
+            <zipgroupfileset dir="${lib.dir}" includes="*.jar" erroronmissingdir="false"/>
+
             <manifest>
                 <attribute name="Manifest-Version" value="1.0"/>
                 <attribute name="Ant-Version" value="Apache Ant 1.9.4"/>
@@ -81,7 +85,7 @@
     <target name="jar" depends="prejar">
         <java jar="${proguard.dir}/proguard.jar" fork="true" failonerror="true">
             <arg value="-injars"/>
-            <arg value="${prebuild.dir}/temp.jar${path.separator}${lib.dir}/*.jar"/>
+            <arg value="${prebuild.dir}/temp.jar"/>
             <arg value="-outjars"/>
             <arg value="${dist.jar}"/>
             <arg value="-libraryjars"/>
