@@ -1,5 +1,4 @@
 package org.CreadoresProgram.CreaProPhone.update;
-import javax.microedition.io.Connector;
 import javax.microedition.io.HttpConnection;
 import javax.microedition.lcdui.Alert;
 import javax.microedition.lcdui.AlertType;
@@ -7,6 +6,9 @@ import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.CommandListener;
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.Displayable;
+
+import tech.alicesworld.ModernConnector.ModernConnector;
+import tech.alicesworld.ModernConnector.ModernHTTPSConnection;
 
 import org.CreadoresProgram.CreaProPhone.Main;
 
@@ -20,11 +22,11 @@ public class GithubUpdate {
     private static String latestVersion = "1.0.0";
     
     public static void checkForUpdates(final Main main, boolean adNoUp) {
-        HttpConnection conn = null;
+        ModernHTTPSConnection conn = null;
         InputStream is = null;
         StringBuffer response = new StringBuffer();
         try {
-            conn = (HttpConnection) Connector.open(repoUrl);
+            conn = (ModernHTTPSConnection) ModernConnector.open(repoUrl);
             conn.setRequestMethod(HttpConnection.GET);
             conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Mobile Safari/537.36");
             conn.setRequestProperty("Accept", "application/vnd.github+json");

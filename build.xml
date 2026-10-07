@@ -15,7 +15,7 @@
     <property name="platform.configuration" value="CLDC-1.1"/>
     <property name="platform.profile" value="MIDP-2.0"/>
 
-    <property name="src.dir" value="source"/>
+    <property name="src.dir" value="src"/>
     <property name="build.dir" value="build"/>
     <property name="build.classes.dir" value="${build.dir}/classes"/>
     <property name="prebuild.dir" value="prebuild"/>
