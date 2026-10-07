@@ -4,20 +4,6 @@
 
     <property file="nbproject/project.properties"/>
 
-    <property name="javac.source" value="1.3"/>
-    <property name="javac.target" value="1.1"/>
-    <property name="javac.encoding" value="UTF-8"/>
-
-    <property name="manifest.midlet-1" value="${ant.project.name}, /icon.png, org.CreadoresProgram.CreaProPhone.Main"/>
-    <property name="manifest.midlet-vendor" value="Creadores Program"/>
-    <property name="manifest.midlet-version" value="1.1.0-beta"/>
-    <property name="manifest.midlet-name" value="${ant.project.name}"/>
-    <property name="platform.configuration" value="CLDC-1.1"/>
-    <property name="platform.profile" value="MIDP-2.0"/>
-
-    <property name="src.dir" value="src"/>
-    <property name="build.dir" value="build"/>
-    <property name="build.classes.dir" value="${build.dir}/classes"/>
     <property name="prebuild.dir" value="prebuild"/>
     <property name="dist.dir" value="dist"/>
     <property name="dist.jar" value="${dist.dir}/${ant.project.name}.jar"/>
