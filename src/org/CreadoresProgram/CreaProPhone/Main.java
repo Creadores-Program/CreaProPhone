@@ -31,12 +31,14 @@ public class Main extends MIDlet implements CommandListener {
     private Command cmdconfigmodelSelectSalir;
 
     private String apiKey;
+
+    public final NetworkWorker netWorker = new NetworkWorker();
     public void startApp() {
-        new Thread(){
+        netWorker.enqueueTask(new Runnable(){
             public void run() {
                 GithubUpdate.checkForUpdates(Main.this, true);
             }
-        }.start();
+        });
         mainMenu = new Form("CreaProPhone");
         cmdmainConfig = new Command("Configuración", Command.SCREEN, 1);
         cmdmainEnviarChat = new Command("Enviar Chat", Command.SCREEN, 2);
@@ -157,11 +159,11 @@ public class Main extends MIDlet implements CommandListener {
             });
             Display.getDisplay(this).setCurrent(tb);
         }else if(c == cmdconfigBuscarAc){
-            new Thread(){
+            netWorker.enqueueTask(new Runnable(){
                 public void run() {
                     GithubUpdate.checkForUpdates(Main.this, false);
                 }
-            }.start();
+            });
         }else if(c == cmdconfigmodelSelectCom){
             Display.getDisplay(this).setCurrent(cmdconfigmodelSelect);
         }else if(c == List.SELECT_COMMAND){
@@ -179,7 +181,7 @@ public class Main extends MIDlet implements CommandListener {
                 return;
             }
             mainMenu.append("Tú: " + message + "\n");
-            new Thread(){
+            netWorker.enqueueTask(new Runnable(){
                 public void run() {
                     String response;
                     try {
@@ -192,7 +194,7 @@ public class Main extends MIDlet implements CommandListener {
                         mainMenu.append("CreaProPhone: Lo Siento!, Mi Celebro da vueltas y no puedo responder a tu pregunta, por favor intenta de nuevo mas tarde.\n");
                     }
                 }
-            }.start();
+            });
             tbEnviarChat.setString("");
             Display.getDisplay(this).setCurrent(mainMenu);
         }else if(c == cmdEnviarChatsalir){
@@ -433,5 +435,6 @@ public class Main extends MIDlet implements CommandListener {
     public void pauseApp() {}
     public void destroyApp(boolean unconditional) {
         saveChat();
+        netWorker.stop();
     }
 }
